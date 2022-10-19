@@ -33,7 +33,7 @@ function App({ msalInstance }) {
           <Grid container justifyContent="center">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/logout" render={()=><Navigate  to='/'/>} />
+              <Route path="/logout" element={ <Navigate to="/" /> } />
             </Routes>
           </Grid>
         </Layout>
