@@ -68,9 +68,9 @@ const UserList = () => {
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: "100%" }}>
         <Grid display="flex" justifyContent="center">
-          {selectedId != -1 && usersData && (
+          {selectedId !== -1 && usersData && (
             <UserDetails
-              graphData={usersData.filter((x) => x.id == selectedId)[0]}
+              graphData={usersData.filter((x) => x.id === selectedId)[0]}
             />
           )}
         </Grid>
