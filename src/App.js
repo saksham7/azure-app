@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { MsalProvider, useIsAuthenticated } from "@azure/msal-react";
+import "./App.css";
+import Layout from "./components/Layout";
+import { Grid } from "@mui/material";
+import { Routes, Route, Navigate  } from "react-router-dom";
+import { Home } from "./components/Home";
+import { useEffect } from "react";
 
-function App() {
+function App({ msalInstance }) {
+    const isAuthenticated = useIsAuthenticated();
+
+    useEffect(() => {
+        // if (!isAuthenticated) {
+        //     // TODO: grab the username from query params
+
+        //     msalInstance.ssoSilent({
+        //         scopes: ["user.read"]
+        //     }).then((response) => {
+        //       msalInstance.setActiveAccount(response.account);
+        //     }).catch((error) => {
+        //         if (error instanceof InteractionRequiredAuthError) {
+        //           msalInstance.loginRedirect({
+        //                 scopes: ["user.read"],
+        //             });
+        //         }
+        //     });
+        // }
+    }, [msalInstance, isAuthenticated]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <MsalProvider instance={msalInstance}>
+        <Layout>
+          <Grid container justifyContent="center">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/logout" render={()=><Navigate  to='/'/>} />
+            </Routes>
+          </Grid>
+        </Layout>
+      </MsalProvider>
+    </>
   );
 }
 
